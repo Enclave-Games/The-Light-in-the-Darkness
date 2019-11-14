@@ -5,20 +5,24 @@ using UnityEngine.UI;
 
 public class PlayerUIController : MonoBehaviour
 {
-    public Button btnRight;
-    public Button btnLeft;
-    private PlayerController playerController;
+    public GameObject panelPause;
+    public GameObject panelInventory;
 
 
-    void Start()
+    public void ActivatePause()
     {
-        playerController = new PlayerController();
+        panelPause.SetActive(true);
     }
 
-   
-
-    void Update()
+    public void ActivateInventoryPanel()
     {
-        
+        if(panelInventory.active == false)
+        {
+            panelInventory.SetActive(true);
+        }
+        else
+        {
+            panelInventory.SetActive(false);
+        }
     }
 }

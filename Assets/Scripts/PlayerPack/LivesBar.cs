@@ -10,24 +10,24 @@ public class LivesBar : MonoBehaviour
 
     private void Awake()
     {
-        player = FindObjectOfType<PlayerController>();
+        //player = FindObjectOfType<PlayerController>();
 
-        for (int i = 0; i < hearts.Length; i++)
-        {
-            hearts[i] = transform.GetChild(i);
-            Debug.Log(hearts[i]);
-        }
+        //for (int i = 0; i < hearts.Length; i++)
+        //{
+        //    hearts[i] = transform.GetChild(i);
+        //    Debug.Log(hearts[i]);
+        //}
     }
 
-    public void Refresh()
-    {
-        for (int i = 0; i < hearts.Length; i++)
-        {
-            if (i < player.Lives)
-            {
-                hearts[i].gameObject.SetActive(true);
-            }
-            else hearts[i].gameObject.SetActive(false);
-        }
-    }
+    //public void Refresh()
+    //{
+    //    for (int i = 0; i < hearts.Length; i++)
+    //    {
+    //        if (i < player.Lives)
+    //        {
+    //            hearts[i].gameObject.SetActive(true);
+    //        }
+    //        else hearts[i].gameObject.SetActive(false);
+    //    }
+    //}
 }

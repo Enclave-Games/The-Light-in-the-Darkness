@@ -8,7 +8,7 @@ public class FollowingCamera : MonoBehaviour
     [SerializeField]
 	float smoothTime = 0.5F;
     [SerializeField]
-    float offset=1f;
+    float offset=5f;
 
     Vector3 vectorOffset;
     bool hasController;
@@ -27,7 +27,7 @@ public class FollowingCamera : MonoBehaviour
 	}
 
 	Vector2 getTarget(){
-        return target.position + (target.GetComponent<PlayerController>().isMovingRight
+        return target.position + (target.GetComponent<PlayerController>().toRight
             ? vectorOffset : -vectorOffset);
     }
 }

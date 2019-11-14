@@ -1,76 +1,92 @@
 ﻿using UnityEngine;
+using UnityEngine.EventSystems;
+using UnityStandardAssets.CrossPlatformInput;
 using UnityEngine.UI;
+
 
 public class PlayerController : MonoBehaviour
 {
 
-    [SerializeField]
-    int lives = 5;
+    //public Transform transformPlayer;
+    float jumpForce = 8.0f;
+    private float horizontalMove;
+    private Rigidbody2D rb;
+    public bool toRight = true;
+    private float speed = 6f;
+    private Animator animator;
+    private float s;
+    private float s1;
+    private SpriteRenderer sprite;
 
-    public int Lives
+    private void Start()
     {
-        get { return lives; }
-        set
-        {
-           if(value < 5) lives = value;
-            livesBar.Refresh();
-        }
-    }
-    private LivesBar livesBar;
-
-    float speed = 3.0f;
-    float jumpForce = 15.0f;
-    public bool isMovingRight = true;
-    
-    bool isMoving = false;
-    bool isGrounded = false;
-    Rigidbody2D rb;
-    public Animator animator;
-
-    void Start()
-    {
-        livesBar = FindObjectOfType<LivesBar>();
         rb = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
-    }
-
-    void Update()
-    {
-        isMoving = false;
-        
-        if(!isMoving&&isGrounded)State = CharState.Idle;
+        sprite = GetComponent<SpriteRenderer>();
     }
 
     public void Run()
     {
-        Vector3 direction = transform.right * speed;
-        transform.position = Vector3.MoveTowards(transform.position, transform.position + direction, speed * Time.deltaTime);
-        if (isGrounded) State = CharState.Run;
+        
+        
+        //transformPlayer.position = new Vector2(horizontalMove * speed, 0f);
+        //animator.Play("Player_Run");
+    }
+
+    void flip()
+    {
+        toRight = !toRight;
+        transform.localScale = new Vector3(transform.localScale.x * -1, transform.localScale.y, transform.localScale.z);
+    }
+
+    private void Update()
+    {
+        horizontalMove = CrossPlatformInputManager.GetAxis("Horizontal");
+        rb.velocity = new Vector2(horizontalMove * speed, 0f);
+
+        if(horizontalMove < 0f && toRight)
+        {
+            flip();
+        }
+
+        if (horizontalMove > 0f && !toRight)
+        {
+            flip();
+        }
+
+
+        if (CrossPlatformInputManager.GetButtonDown("Jump"))
+        {
+            Debug.Log("J!");
+        }
+       
+
+        if (horizontalMove == 0f)
+        {
+            animator.Play("Player_Idle");
+        }
+        else
+        {
+            animator.Play("Player_Run");
+        }
     }
 
     public void Jump()
     {
         rb.AddForce(transform.up * jumpForce, ForceMode2D.Impulse);
-        State = CharState.Jump;
     }
-
 
     void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.gameObject.tag == "Ground") isGrounded = true;
+       // if (collision.gameObject.tag == "Ground") isGrounded = true;
     }
 
     void OnCollisionExit2D(Collision2D collision)
     {
-        if (collision.gameObject.tag == "Ground") isGrounded = false;
-        if (!isGrounded) State = CharState.Jump;
+        //if (collision.gameObject.tag == "Ground") isGrounded = false;
+        
     }
 
-    CharState State
-    {
-        get { return (CharState)animator.GetInteger("State"); }
-        set { animator.SetInteger("State", (int)value); }
-    }
 
     public enum CharState
     {
@@ -79,9 +95,7 @@ public class PlayerController : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.tag == "HealthPotion")
-            Destroy(collision.gameObject);
-        Destroy(collision.gameObject);
+        
     }
 }
 
