@@ -8,13 +8,13 @@ public class EnemyNavigator : GeneralNavigator
     public Transform characterTarget;
     private float speed = 2f;
 
-    public void MoveToTarget(Animator animator, Transform currentEnemy)
+    public void MoveToTarget(/*Animator animator, */Transform currentEnemy)
     {
         characterTarget.transform.position = Vector2.MoveTowards(
             currentEnemy.transform.position,
             characterTarget.position,
             Time.deltaTime * speed);
-        animator.Play("some animations");
+        //animator.Play("some animations");
     }
 
     public void MoveToNoise()

@@ -4,15 +4,17 @@ using UnityEngine;
 
 public class EnemyController : MonoBehaviour
 {
-    // Start is called before the first frame update
+    private EnemyNavigator enemyNavigator;
+    public GameObject mainCharacter;
+
     void Start()
     {
-        
+        enemyNavigator = new EnemyNavigator();
+        enemyNavigator.ActivateBrain();
     }
 
-    // Update is called once per frame
     void Update()
     {
-        
+        enemyNavigator.MoveToTarget(mainCharacter.transform);
     }
 }

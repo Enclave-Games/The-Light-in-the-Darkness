@@ -1,8 +1,11 @@
 ﻿using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityStandardAssets.CrossPlatformInput;
+using System.Collections;
+using IronPython.Hosting;
+using System;
+using Microsoft.Scripting.Hosting;
 using UnityEngine.UI;
-
 
 public class PlayerController : MonoBehaviour
 {
@@ -39,12 +42,14 @@ public class PlayerController : MonoBehaviour
         transform.localScale = new Vector3(transform.localScale.x * -1, transform.localScale.y, transform.localScale.z);
     }
 
+   
+
     private void Update()
     {
         horizontalMove = CrossPlatformInputManager.GetAxis("Horizontal");
         rb.velocity = new Vector2(horizontalMove * speed, 0f);
 
-        if(horizontalMove < 0f && toRight)
+        if (horizontalMove < 0f && toRight)
         {
             flip();
         }
@@ -57,7 +62,7 @@ public class PlayerController : MonoBehaviour
 
         if (CrossPlatformInputManager.GetButtonDown("Jump"))
         {
-            Debug.Log("J!");
+            UnityEngine.Debug.Log("J!");
         }
        
 
